@@ -18,7 +18,8 @@ export function getDatabase(): Database.Database {
 export function initDatabase(): void {
   const database = getDatabase();
   
-  const schemaPath = path.join(__dirname, './schema.sql');
+  // Look for schema.sql in dist first (production), then fall back to src
+  const schemaPath = path.join(__dirname, '../database/schema.sql');
   const schema = fs.readFileSync(schemaPath, 'utf-8');
   
   // Split by semicolon and execute each statement

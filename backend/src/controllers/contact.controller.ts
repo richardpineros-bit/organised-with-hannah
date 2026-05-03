@@ -18,7 +18,7 @@ export function submitContact(req: Request, res: Response): void {
     // TODO: Send email notification to Hannah
     
     res.status(201).json({
-      id: result.lastInsertRowid,
+      id: (result as any).lastInsertRowid,
       message: 'Thank you! Hannah will be in touch soon.'
     });
   } catch (error) {

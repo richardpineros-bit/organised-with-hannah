@@ -85,7 +85,7 @@ export function createQuizQuestion(req: Request, res: Response): void {
       'INSERT INTO quiz_questions (quiz_slug, question, sort_order, options) VALUES (?, ?, ?, ?)'
     ).run(quiz_slug, question, sort_order, JSON.stringify(options));
     
-    res.status(201).json({ id: result.lastInsertRowid });
+    res.status(201).json({ id: (result as any).lastInsertRowid });
   } catch (error) {
     res.status(500).json({ error: 'Failed to create quiz question' });
   }

@@ -37,8 +37,7 @@ export function getAvailability(req: Request, res: Response): void {
     
     const dayOfWeek = getDayOfWeek(date);
     
-    // Get Hannah's availability for that day
-    const availability = db.prepare(
+    const availability: Array<{ start_time: string; end_time: string }> = db.prepare(
       'SELECT start_time, end_time FROM availability WHERE day_of_week = ? AND is_available = 1'
     ).all(dayOfWeek);
     
@@ -48,7 +47,7 @@ export function getAvailability(req: Request, res: Response): void {
     }
     
     // Get existing bookings for that date
-    const bookings = db.prepare(
+    const bookings: Array<{ start_time: string; end_time: string }> = db.prepare(
       'SELECT start_time, end_time FROM bookings WHERE booking_date = ? AND status IN ("pending", "confirmed")'
     ).all(date);
     

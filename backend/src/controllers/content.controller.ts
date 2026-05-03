@@ -15,7 +15,7 @@ export function getContent(req: Request, res: Response): void {
     
     // Group by section for easier frontend use
     const grouped: Record<string, Record<string, any>> = {};
-    for (const row of rows) {
+    for (const row of rows as Array<{ section: string; key: string; value: string; type: string }>) {
       if (!grouped[row.section]) grouped[row.section] = {};
       grouped[row.section][row.key] = row.type === 'json' ? JSON.parse(row.value) : row.value;
     }

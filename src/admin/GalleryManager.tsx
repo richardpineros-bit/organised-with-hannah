@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { api } from '@/lib/api';
 import { AdminLayout } from './AdminLayout';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Trash2, Upload } from 'lucide-react';
 
 export function GalleryManager() {

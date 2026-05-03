@@ -1,0 +1,13 @@
+export function ProblemCarousel() { return null; }
+export function AboutSection() { return null; }
+export function WhyOrganiseSection() { return null; }
+export function WhyChooseSection() { return null; }
+export function LifeFlowSection() { return null; }
+export function VideoSection() { return null; }
+export function ServicesSection() { return null; }
+export function PricingSection() { return null; }
+export function TestimonialSection() { return null; }
+export function ReviewsSection() { return null; }
+export function GallerySection() { return null; }
+export function ContactSection() { return null; }
+export function CertificationsSection() { return null; }

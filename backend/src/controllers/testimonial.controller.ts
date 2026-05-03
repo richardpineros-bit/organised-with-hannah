@@ -22,7 +22,7 @@ export function createTestimonial(req: Request, res: Response): void {
       'INSERT INTO testimonials (name, location, rating, text, image_path, is_featured) VALUES (?, ?, ?, ?, ?, ?)'
     ).run(name, location || null, rating || 5, text, image_path || null, is_featured ? 1 : 0);
     
-    res.status(201).json({ id: result.lastInsertRowid });
+    res.status(201).json({ id: (result as any).lastInsertRowid });
   } catch (error) {
     res.status(500).json({ error: 'Failed to create testimonial' });
   }

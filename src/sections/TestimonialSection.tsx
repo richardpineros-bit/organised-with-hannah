@@ -16,18 +16,17 @@ export function TestimonialSection() {
   return (
     <section className="py-20 bg-primary">
       <div className="max-w-4xl mx-auto px-4 text-center">
-        <h2 className="text-3xl font-bold text-white mb-12">
-          {getValue('testimonials', 'title', 'What People Say')}
-        </h2>
-
+        <Quote className="w-12 h-12 text-white/30 mx-auto mb-6" />
+        
         {featured.length > 0 ? (
           featured.map((t) => (
             <div key={t.id} className="text-white">
-              <Quote className="w-12 h-12 mx-auto mb-6 opacity-50" />
-              <p className="text-xl leading-relaxed mb-6">{t.text}</p>
+              <p className="text-xl md:text-2xl leading-relaxed mb-8">
+                {t.text}
+              </p>
               <div className="flex justify-center gap-1 mb-4">
                 {[...Array(t.rating)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-white" />
+                  <Star key={i} className="w-5 h-5 text-white fill-white" />
                 ))}
               </div>
               <p className="font-medium">{t.name} — {t.location}</p>

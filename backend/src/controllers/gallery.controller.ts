@@ -28,7 +28,7 @@ export function addGalleryImage(req: Request, res: Response): void {
       'INSERT INTO gallery (title, image_path, category) VALUES (?, ?, ?)'
     ).run(title || null, image_path, category || null);
     
-    res.status(201).json({ id: result.lastInsertRowid, image_path });
+    res.status(201).json({ id: (result as any).lastInsertRowid, image_path });
   } catch (error) {
     res.status(500).json({ error: 'Failed to add gallery image' });
   }

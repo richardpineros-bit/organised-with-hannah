@@ -8,22 +8,27 @@ export function GallerySection() {
     api.getGallery().then(setImages).catch(console.error);
   }, []);
 
-  if (images.length === 0) return null;
+  const defaultImages = [
+    '/images/gallery-1.jpg',
+    '/images/gallery-2.jpg',
+    '/images/gallery-3.jpg',
+    '/images/gallery-4.jpg',
+    '/images/gallery-5.jpg',
+    '/images/gallery-6.jpg',
+  ];
+
+  const displayImages = images.length > 0 ? images.map((img) => `http://46.225.171.57:3001${img.image_path}`) : defaultImages;
 
   return (
     <section className="py-12 bg-white overflow-hidden">
-      <div className="max-w-6xl mx-auto px-4 mb-8">
-        <h2 className="text-2xl font-bold text-center">Gallery</h2>
-      </div>
-      <div className="flex gap-4 overflow-x-auto px-4 pb-4">
-        {images.map((img) => (
-          <img
-            key={img.id}
-            src={`http://46.225.171.57:3001${img.image_path}`}
-            alt={img.title || 'Gallery image'}
-            className="h-64 w-64 object-cover rounded-lg flex-shrink-0"
-          />
-        ))}
+      <div className="relative">
+        <div className="flex gap-4 animate-scroll hover:animation-paused">
+          {[...displayImages, ...displayImages].map((src, index) => (
+            <div key={index} className="flex-shrink-0 w-64 h-64 rounded-lg overflow-hidden">
+              <img src={src} alt={`Gallery ${index + 1}`} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

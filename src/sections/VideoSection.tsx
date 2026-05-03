@@ -1,1 +1,32 @@
-export function VideoSection() { return null; }
+import { motion } from 'framer-motion';
+import { Play } from 'lucide-react';
+
+export function VideoSection() {
+  return (
+    <section className="py-20 bg-gray-50">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="flex justify-center">
+            <div className="relative w-64 h-64 md:w-80 md:h-80">
+              <div className="absolute inset-0 bg-gray-200 rounded-full" />
+              <button className="absolute inset-0 flex items-center justify-center group">
+                <div className="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Play className="w-8 h-8 text-white ml-1" fill="white" />
+                </div>
+              </button>
+            </div>
+          </motion.div>
+          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+            <p className="text-xl text-gray-600 mb-2">Hey <em className="text-primary font-semibold">Beautiful</em>...</p>
+            <h2 className="text-2xl font-bold text-primary mb-4">
+              I am Hannah, wife, mama, and coffee enthusiast
+            </h2>
+            <p className="text-gray-700 leading-relaxed">
+              Amongst the chaos of life with three lively boys, I have discovered a deep love for cleaning and decluttering. There is something oddly satisfying about restoring order.
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}

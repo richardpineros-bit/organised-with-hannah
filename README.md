@@ -1,157 +1,130 @@
-# Organised with Hannah
+# Organised With Hannah
 
-A professional organizing services website built with React, TypeScript, and Tailwind CSS.
+> **Fully autonomous, self-hosted platform** — zero SaaS subscriptions, complete ownership.
 
-![Website Preview](./public/images/hero-bg.jpg)
+A professional home organising services website with a built-in admin dashboard (like WordPress), custom booking system, quiz builder, and digital product store.
+
+---
+
+## Architecture
+
+| Layer | Technology | Cost |
+|-------|-----------|------|
+| **Frontend** | React 18 + TypeScript + Vite + Tailwind | $0 |
+| **Backend** | Express.js + TypeScript | $0 |
+| **Database** | SQLite (better-sqlite3) | $0 |
+| **Auth** | JWT + bcryptjs | $0 |
+| **Email** | Nodemailer + Gmail SMTP | $0 |
+| **File Storage** | Local filesystem | $0 |
+| **Payments** | Stripe (per-transaction only) | 1.75% + 30c |
+| **Hosting** | VPS (DigitalOcean/Linode) | ~$5/mo |
+
+**Total monthly cost: ~$5 + Stripe fees**
+
+---
 
 ## Features
 
-- **Responsive Design** - Works on all devices
-- **Modern Animations** - Smooth scroll animations with Framer Motion
-- **SEO Optimized** - Meta tags and semantic HTML
-- **Fast Performance** - Built with Vite for optimal loading speeds
-- **Customizable** - Easy to modify content and styling
+### Public Website
+- Homepage with all sections (hero, about, services, pricing, testimonials, contact)
+- **Dynamic content** — all text loaded from database via API
+- **Booking system** — calendar with time slot selection, no Calendly needed
+- **Quiz** — interactive personality quiz with results
+- **Digital store** — ready for Stripe integration
 
-## Tech Stack
+### Admin Dashboard (`/admin`)
+- **Content Editor** — edit all website text (like WordPress)
+- **Booking Manager** — view, confirm, cancel bookings
+- **Service Manager** — add/edit services and pricing
+- **Testimonial Manager** — add/edit customer reviews
+- **Gallery Manager** — upload/delete images
+- **Quiz Builder** — add quiz questions
+- **Contact Submissions** — view form submissions
+- **Settings** — edit site-wide settings
 
-- **Framework:** React 18 + TypeScript
-- **Build Tool:** Vite
-- **Styling:** Tailwind CSS 3.4
-- **UI Components:** shadcn/ui
-- **Animations:** Framer Motion
-- **Icons:** Lucide React
+---
 
-## Sections
+## Quick Start
 
-1. Hero Section - Full-screen banner with call-to-action
-2. Problem Carousel - Client scenario cards
-3. About Hannah - Bio and mission statement
-4. Why Organise - Benefits and services
-5. Why Choose Hannah - Credentials and experience
-6. Life Flow Approach - Philosophy
-7. Video Introduction - Personal introduction
-8. Services - 4-step organizing journey
-9. Pricing - Three service packages
-10. Testimonials - Customer reviews
-11. Gallery - Project showcase
-12. Contact Form - Get in touch
-13. Certifications - Professional badges
-14. Footer - Social links and branding
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+ 
-- npm or yarn
-
-### Installation
-
-1. Clone the repository:
+### 1. Clone & Install
 ```bash
-git clone https://github.com/yourusername/organised-with-hannah.git
+git clone https://github.com/richardpineros-bit/organised-with-hannah.git
 cd organised-with-hannah
 ```
 
-2. Install dependencies:
+### 2. Start Backend
 ```bash
+cd backend
+cp .env.example .env
 npm install
+npx ts-node src/server.ts
+# API runs on http://localhost:3001
 ```
 
-3. Start the development server:
+### 3. Start Frontend
 ```bash
+cd ..
+npm install
 npm run dev
+# Site opens on http://localhost:5173
 ```
 
-4. Open [http://localhost:5173](http://localhost:5173) in your browser
+### 4. Access Admin
+- Go to: http://localhost:5173/admin/login
+- Login: `admin@organisedwithhannah.com` / `admin123`
 
-### Build for Production
+---
 
-```bash
-npm run build
-```
+## API Endpoints
 
-The built files will be in the `dist/` directory.
+| Method | Endpoint | Auth |
+|--------|----------|------|
+| POST | /api/auth/login | Public |
+| GET | /api/content | Public |
+| PUT | /api/content/:section/:key | Admin |
+| GET | /api/services | Public |
+| GET | /api/bookings/availability | Public |
+| POST | /api/bookings | Public |
+| GET | /api/testimonials | Public |
+| POST | /api/contact | Public |
+| GET | /api/quiz/:slug | Public |
 
-## Customization
+---
 
-### Changing Colors
+## Why This Beats WordPress
 
-Edit `tailwind.config.js`:
+| Feature | WordPress | This Solution |
+|---------|-----------|---------------|
+| Hosting | $10-50/mo | $5/mo |
+| Plugin fees | $$$ | $0 |
+| Page speed | Slow (PHP) | Fast (React) |
+| Booking system | Paid plugin | Built-in |
+| Code ownership | No | 100% yours |
+| Database bloat | Yes | Compact SQLite |
 
-```javascript
-colors: {
-  primary: {
-    DEFAULT: '#7A9E8E',  // Your brand color
-    dark: '#5D7A6E',
-    light: '#9AB8AB',
-  },
-}
-```
-
-### Changing Content
-
-Edit `src/App.tsx` to modify:
-- Section headings and descriptions
-- About section bio
-- Pricing packages
-- Testimonials
-- Navigation menu
-
-### Changing Images
-
-Replace images in `public/images/`:
-- `hero-bg.jpg` - Hero background
-- `hannah-about.jpg` - About section photo
-- `pricing-bg.jpg` - Pricing section background
-- `contact-bg.jpg` - Contact section background
-- `gallery-1.jpg` to `gallery-6.jpg` - Gallery images
-- `org-academy-badge.png` - Certification badge
-- `mhfa-badge.png` - Mental Health First Aid badge
-
-## Project Structure
-
-```
-├── public/
-│   └── images/           # Static images
-├── src/
-│   ├── components/       # Reusable components
-│   │   └── ui/          # shadcn/ui components
-│   ├── sections/        # Page sections
-│   ├── hooks/           # Custom React hooks
-│   ├── lib/             # Utility functions
-│   ├── App.tsx          # Main app component
-│   ├── main.tsx         # Entry point
-│   └── index.css        # Global styles
-├── index.html
-├── tailwind.config.js   # Tailwind configuration
-├── vite.config.ts       # Vite configuration
-└── package.json
-```
+---
 
 ## Deployment
 
-### Deploy to Netlify
+### Option 1: Single VPS ($5/mo)
+```
+VPS (Ubuntu)
+├── Nginx (reverse proxy)
+├── PM2 (Node.js process manager)
+│   ├── API server (Express, port 3001)
+│   └── Frontend (Vite preview, port 3000)
+├── SQLite database (local file)
+└── SSL (Let's Encrypt, free)
+```
 
-1. Push code to GitHub
-2. Connect repo to Netlify
-3. Build command: `npm run build`
-4. Publish directory: `dist`
+### Option 2: Separate Frontend + Backend
+```
+Frontend: Static hosting (Cloudflare Pages = FREE)
+Backend: VPS $5/month (API + database + uploads)
+```
 
-### Deploy to Vercel
-
-1. Push code to GitHub
-2. Import project in Vercel
-3. Framework preset: Vite
-4. Build command: `npm run build`
-5. Output directory: `dist`
+---
 
 ## License
 
-MIT License - feel free to use this for your own projects!
-
-## Credits
-
-- Design inspired by [organisedhannah.com.au](https://organisedhannah.com.au)
-- Built with [shadcn/ui](https://ui.shadcn.com) components
-- Icons by [Lucide](https://lucide.dev)
+MIT — you own everything.

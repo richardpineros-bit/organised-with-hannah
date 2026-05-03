@@ -25,7 +25,7 @@ export function authMiddleware(req: AuthRequest, res: Response, next: NextFuncti
     const decoded = jwt.verify(token, JWT_SECRET) as { id: number; email: string; role: string };
     
     const db = getDatabase();
-    const user = db.prepare('SELECT id, email, role, name FROM users WHERE id = ?').get(decoded.id);
+    const user = db.prepare('SELECT id, email, role, name FROM users WHERE id = ?').get(decoded.id) as any;
     
     if (!user) {
       res.status(401).json({ error: 'User not found' });

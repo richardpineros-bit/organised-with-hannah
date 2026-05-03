@@ -3,15 +3,15 @@ import { api } from '@/lib/api';
 import { AdminLayout } from './AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Pencil, Trash2 } from 'lucide-react';
+import { Plus } from 'lucide-react';
 
 export function QuizBuilder() {
   const [questions, setQuestions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [editing, setEditing] = useState<any>(null);
   const [formData, setFormData] = useState({ quiz_slug: 'clutter-personality', question: '', sort_order: 1, options: '' });
 
   useEffect(() => {
@@ -43,11 +43,6 @@ export function QuizBuilder() {
     } catch (error) {
       console.error('Failed to save question:', error);
     }
-  }
-
-  async function deleteQuestion(id: number) {
-    // Note: delete endpoint would need to be added
-    alert('Delete functionality requires additional backend endpoint');
   }
 
   return (

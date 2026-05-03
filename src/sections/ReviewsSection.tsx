@@ -18,10 +18,13 @@ export function ReviewsSection() {
     <section id="customers" className="py-20 bg-primary">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
-          <p className="text-white/80 mb-2">{getValue('testimonials', 'subtitle', 'Our Customers\' Reviews')}</p>
-          <h2 className="text-3xl font-bold text-white">
-            {getValue('testimonials', 'title', 'What People Say')}
+          <p className="text-white/80 mb-2">What people say</p>
+          <h2 className="text-3xl font-bold text-white mb-4">
+            {getValue('testimonials', 'title', 'Our Customers\' Reviews')}
           </h2>
+          <p className="text-white/80">
+            Check our customers&apos; experience. Our services are the perfect choice for all walks of life.
+          </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
@@ -40,8 +43,8 @@ export function ReviewsSection() {
               </div>
               <p className="text-gray-600 text-sm leading-relaxed mb-6 text-center">{review.text}</p>
               <div className="text-center">
-                <p className="font-semibold">{review.name}</p>
-                <p className="text-sm text-gray-500">{review.location}</p>
+                <p className="font-semibold text-gray-900 mb-1">{review.title || review.name}</p>
+                <p className="text-sm text-gray-500">by {review.name}, {review.location}</p>
               </div>
             </motion.div>
           ))}

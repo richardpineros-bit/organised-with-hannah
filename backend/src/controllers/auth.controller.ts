@@ -31,14 +31,14 @@ export async function register(req: Request, res: Response): Promise<void> {
     ).run(email, passwordHash, name || null, phone || null, 'customer');
     
     const token = jwt.sign(
-      { id: result.lastInsertRowid, email, role: 'customer' },
+      { id: (result as any).lastInsertRowid, email, role: 'customer' },
       JWT_SECRET,
       { expiresIn: JWT_EXPIRES_IN }
     );
     
     res.status(201).json({
       token,
-      user: { id: result.lastInsertRowid, email, name, role: 'customer' }
+      user: { id: (result as any).lastInsertRowid, email, name, role: 'customer' }
     });
   } catch (error) {
     console.error('Register error:', error);

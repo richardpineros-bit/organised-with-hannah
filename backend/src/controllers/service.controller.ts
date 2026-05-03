@@ -30,7 +30,7 @@ export function createService(req: Request, res: Response): void {
     ).run(slug, name, description, long_description, price, unit, min_hours, 
           JSON.stringify(features || []), who_for, outcome);
     
-    res.status(201).json({ id: result.lastInsertRowid, slug, name });
+    res.status(201).json({ id: (result as any).lastInsertRowid, slug, name });
   } catch (error) {
     console.error('Create service error:', error);
     res.status(500).json({ error: 'Failed to create service' });

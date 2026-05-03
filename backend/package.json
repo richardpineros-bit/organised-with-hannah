@@ -1,0 +1,36 @@
+{
+  "name": "organised-with-hannah-api",
+  "version": "1.0.0",
+  "description": "Fully autonomous backend API for Organised With Hannah",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "db:seed": "ts-node src/database/seed.ts",
+    "db:reset": "rm -f database.sqlite && npm run db:seed"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "cors": "^2.8.5",
+    "bcryptjs": "^3.0.2",
+    "jsonwebtoken": "^9.0.2",
+    "better-sqlite3": "^12.1.0",
+    "multer": "^1.4.5-lts.2",
+    "nodemailer": "^6.10.1",
+    "dotenv": "^16.5.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.2",
+    "@types/cors": "^2.8.17",
+    "@types/bcryptjs": "^3.0.0",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/multer": "^1.4.12",
+    "@types/nodemailer": "^6.4.17",
+    "@types/better-sqlite3": "^7.6.13",
+    "typescript": "~5.9.3",
+    "ts-node": "^10.9.2",
+    "nodemon": "^3.1.10"
+  }
+}

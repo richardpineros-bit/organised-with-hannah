@@ -101,7 +101,7 @@ const sections = [
 ];
 
 export function ContentEditor() {
-  const { content, fetchContent, updateContent, isLoading } = useContentStore();
+  const { content, fetchContent, updateContent } = useContentStore();
   const [saving, setSaving] = useState<Record<string, boolean>>({});
   const [activeTab, setActiveTab] = useState('hero');
   const [editedValues, setEditedValues] = useState<Record<string, string>>({});

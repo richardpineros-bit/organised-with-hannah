@@ -21,14 +21,14 @@ export function getSetting(req: Request, res: Response): void {
   try {
     const { key } = req.params;
     const db = getDatabase();
-    const row = db.prepare('SELECT value, type FROM settings WHERE key = ?').get(key);
+    const row = db.prepare('SELECT value, type FROM settings WHERE key = ?').get(key) as any;
     
     if (!row) {
       res.status(404).json({ error: 'Setting not found' });
       return;
     }
     
-    const value = (row as any).type === 'json' ? JSON.parse((row as any).value) : (row as any).value;
+    const value = row.type === 'json' ? JSON.parse(row.value) : row.value;
     res.json({ key, value });
   } catch (error) {
     res.status(500).json({ error: 'Failed to get setting' });

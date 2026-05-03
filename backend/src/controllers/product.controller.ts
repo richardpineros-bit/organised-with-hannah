@@ -15,7 +15,7 @@ export function getProduct(req: Request, res: Response): void {
   try {
     const { slug } = req.params;
     const db = getDatabase();
-    const row = db.prepare('SELECT * FROM products WHERE slug = ? AND is_active = 1').get(slug);
+    const row = db.prepare('SELECT * FROM products WHERE slug = ? AND is_active = 1').get(slug) as any;
     
     if (!row) {
       res.status(404).json({ error: 'Product not found' });

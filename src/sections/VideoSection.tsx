@@ -18,11 +18,11 @@ export function VideoSection() {
           </motion.div>
           <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
             <p className="text-xl text-gray-600 mb-2">Hey <em className="text-primary font-semibold">Beautiful</em>...</p>
-            <h2 className="text-2xl font-bold text-primary mb-4">
-              I am Hannah, wife, mama, and coffee enthusiast
+            <h2 className="text-2xl font-bold text-primary mb-6">
+              I&apos;m Hannah, wife, mama, and <em className="not-italic">coffee enthusiast</em>
             </h2>
             <p className="text-gray-700 leading-relaxed">
-              Amongst the chaos of life with three lively boys, I have discovered a deep love for cleaning and decluttering. There is something oddly satisfying about restoring order.
+              Amongst the chaos of life with three lively boys, I&apos;ve discovered a deep love for cleaning and decluttering. There&apos;s something oddly satisfying about restoring order, in the midst of mayhem...
             </p>
           </motion.div>
         </div>

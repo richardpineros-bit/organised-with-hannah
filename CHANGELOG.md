@@ -1,0 +1,50 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## 2026-05-06
+
+### Added
+- Scroll spy navigation: Active menu tab underline follows scroll position via IntersectionObserver
+- Transparent header: Starts invisible over hero image, transitions to frosted glass on scroll
+- Nav text color adapts: White over hero, dark after scrolling
+- Book Now button color adapts: White/green over hero, green/white after scroll
+- Mobile hamburger icon color adapts to header state
+- Shop link added to navigation
+- `useScrollSpy` hook with IntersectionObserver for reliable section detection
+- Section background colors: Alternating white/warm-off-white/gray between sections
+- Alternating slide animations: Cards enter from left/right alternating on scroll
+- `scroll-mt-[90px]` on all anchor sections prevents header overlap
+
+### Fixed
+- API URL changed from `localhost:3001` to `/api` for production nginx proxy
+- vite.config.ts `base` changed from `./` to `/` for absolute asset paths (fixes admin 404)
+- Gallery API 500 error: Removed `created_at` from ORDER BY (column doesn't exist)
+- TypeScript unused import errors in ServicesSection and TestimonialSection
+- Escaped apostrophes in ServicesSection using template literals
+
+## 2025-05-05
+
+### Added
+- Alternating slide animations between sections
+- Alternating section background colors
+
+### Fixed
+- Build errors and API paths
+
+## 2025-05-03
+
+### Added
+- Admin dashboard with 12 management pages
+- Full backend API with Express + SQLite
+- JWT authentication with bcryptjs
+- Content editor, booking manager, service manager
+- Testimonial manager, gallery manager, quiz builder
+- Contact submissions viewer, settings manager
+- Zustand state management for auth and content
+
+### Infrastructure
+- Deployed to Hetzner VPS (46.225.171.57)
+- Nginx reverse proxy configuration
+- PM2 process manager for API
+- SPA fallback routing in nginx

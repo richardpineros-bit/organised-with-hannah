@@ -5,13 +5,25 @@ export function AboutSection() {
   const { getValue } = useContentStore();
 
   return (
-    <section id="about" className="py-20 bg-white">
+    <section id="about" className="py-20 section-white scroll-mt-[90px]">
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-            <img src="/images/hannah-about.jpg" alt="Hannah organising" className="w-full rounded-lg shadow-lg" />
+          <motion.div 
+            initial={{ opacity: 0, x: -60 }} 
+            whileInView={{ opacity: 1, x: 0 }} 
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            className="flex justify-center"
+          >
+            <img src="/images/hannah-about.jpg" alt="Hannah organising" className="w-full max-w-md rounded-lg shadow-lg object-cover" />
           </motion.div>
-          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+          <motion.div 
+            initial={{ opacity: 0, x: 60 }} 
+            whileInView={{ opacity: 1, x: 0 }} 
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            className="flex flex-col justify-center"
+          >
             <div className="text-center mb-6">
               <div className="w-12 h-12 rounded-full border-2 border-primary flex items-center justify-center mx-auto mb-4">
                 <span className="text-primary text-xl font-bold">O</span>

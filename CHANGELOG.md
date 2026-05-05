@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2026-05-06 (Evening)
+
+### Changed
+- Shop button moved from scroll nav to CTA button (next to Book Now) - clearer separation between scroll sections and page links
+- Scroll spy improved: Home tab only active when at literal top of page (scrollY < 100)
+- Scroll spy keeps last active section when none visible (prevents jumping back to Home)
+- IntersectionObserver rootMargin adjusted to `-20%` bottom for better detection
+
 ## 2026-05-06
 
 ### Added

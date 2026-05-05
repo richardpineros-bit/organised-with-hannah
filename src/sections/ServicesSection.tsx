@@ -11,10 +11,10 @@ export function ServicesSection() {
   }, []);
 
   const steps = [
-    { number: 1, title: 'Free Consultation', desc: 'I begin by getting to know your goals and vision for your space. Once I see the space, I'll suggest steps and practical systems to enhance your environment.' },
-    { number: 2, title: 'Turning Plans into Action', desc: 'Utilising the 4-box method, I'll designate containers to sort through and eliminate items that no longer serve a purpose in your space.' },
+    { number: 1, title: 'Free Consultation', desc: 'I begin by getting to know your goals and vision for your space. Once I see the space, I\'ll suggest steps and practical systems to enhance your environment.' },
+    { number: 2, title: 'Turning Plans into Action', desc: 'Utilising the 4-box method, I\'ll designate containers to sort through and eliminate items that no longer serve a purpose in your space.' },
     { number: 3, title: 'Organisation', desc: 'Utilising either new or existing storage solutions and containers, I will efficiently organise and label the space according to your individual needs.' },
-    { number: 4, title: 'Final Assessment', desc: 'Together, we'll evaluate the effectiveness of the implemented systems and identify any areas that require adjustment or modification.' },
+    { number: 4, title: 'Final Assessment', desc: 'Together, we\'ll evaluate the effectiveness of the implemented systems and identify any areas that require adjustment or modification.' },
   ];
 
   return (
@@ -32,7 +32,7 @@ export function ServicesSection() {
             {getValue('services', 'title', 'Decluttering, Cleaning and Organising')}
           </h2>
           <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
-            I help to create space, for clarity and peace, reducing stress and increasing productivity. When organising and decluttering I streamline daily life, making it easier to find what&apos;s needed and focus on what truly matters.
+            I help to create space, for clarity and peace, reducing stress and increasing productivity. When organising and decluttering I streamline daily life, making it easier to find what\'s needed and focus on what truly matters.
           </p>
         </motion.div>
 

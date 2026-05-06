@@ -16,7 +16,6 @@ export function GoogleReviewsSection() {
   const [reviews, setReviews] = useState<GoogleReview[]>([]);
   const [avgRating, setAvgRating] = useState(4.9);
   const [totalReviews, setTotalReviews] = useState(0);
-  const [loading, setLoading] = useState(false);
 
   // Google Place ID for Organised With Hannah
   // You can set this in admin settings panel
@@ -41,7 +40,7 @@ export function GoogleReviewsSection() {
           // Fall back to static testimonials from API
           loadStaticReviews();
         })
-        .finally(() => setLoading(false));
+        .finally(() => {});
     } else {
       loadStaticReviews();
     }

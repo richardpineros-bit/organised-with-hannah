@@ -23,6 +23,7 @@ import { ReviewsSection } from '@/sections/ReviewsSection';
 import { GallerySection } from '@/sections/GallerySection';
 import { ContactSection } from '@/sections/ContactSection';
 import { CertificationsSection } from '@/sections/CertificationsSection';
+import { GoogleReviewsSection } from '@/sections/GoogleReviewsSection';
 
 // New Features
 import { BookingPage } from '@/sections/BookingPage';
@@ -56,6 +57,7 @@ function PublicLayout() {
         <VideoSection />
         <ServicesSection />
         <PricingSection />
+        <GoogleReviewsSection />
         <TestimonialSection />
         <ReviewsSection />
         <GallerySection />

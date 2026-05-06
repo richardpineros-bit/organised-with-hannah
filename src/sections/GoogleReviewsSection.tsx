@@ -14,6 +14,7 @@ interface GoogleReview {
 export function GoogleReviewsSection() {
   const { getValue } = useContentStore();
   const [reviews, setReviews] = useState<GoogleReview[]>([]);
+  const [loading, setLoading] = useState(false);
   const [avgRating, setAvgRating] = useState(4.9);
   const [totalReviews, setTotalReviews] = useState(0);
 
@@ -30,6 +31,7 @@ export function GoogleReviewsSection() {
       fetch(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews,rating,user_ratings_total&key=${apiKey}`)
         .then(r => r.json())
         .then(data => {
+          setLoading(false);
           if (data.result) {
             setAvgRating(data.result.rating || 4.9);
             setTotalReviews(data.result.user_ratings_total || 0);
@@ -39,8 +41,8 @@ export function GoogleReviewsSection() {
         .catch(() => {
           // Fall back to static testimonials from API
           loadStaticReviews();
-        })
-        .finally(() => {});
+          setLoading(false);
+        });
     } else {
       loadStaticReviews();
     }
@@ -89,6 +91,9 @@ export function GoogleReviewsSection() {
             <span className="text-sm text-gray-500">Google</span>
           </div>
         </motion.div>
+
+        {/* Loading State */}
+        {loading && <div className="text-center py-8"><div className="inline-block w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" /></div>}
 
         {/* Review Cards */}
         <div className="grid md:grid-cols-3 gap-6 mb-10">

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Star, ExternalLink, MapPin } from 'lucide-react';
+import { Star, ExternalLink, MapPin, Palette } from 'lucide-react';
 import { api } from '@/lib/api';
+import { useContentStore } from '@/store/contentStore';
 
 interface Review {
   id?: number;
@@ -12,9 +13,23 @@ interface Review {
 }
 
 export function GoogleReviewsSection() {
+  const { getValue } = useContentStore();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [avgRating, setAvgRating] = useState(4.9);
   const [totalReviews, setTotalReviews] = useState(0);
+
+  // Customisable: admin can set background color in content editor
+  // Keys: reviews.bg_color (e.g. 'primary', 'white', 'gray', 'warm')
+  const bgColor = getValue('reviews', 'bg_color', 'primary'); // default: green
+  const bgClass = bgColor === 'white' ? 'bg-white' : bgColor === 'gray' ? 'bg-gray-50' : bgColor === 'warm' ? 'bg-[hsl(35,25%,97%)]' : 'bg-primary';
+  const isGreen = bgColor === 'primary' || !bgColor;
+  const textColor = isGreen ? 'text-white' : 'text-primary';
+  const subTextColor = isGreen ? 'text-white/60' : 'text-gray-500';
+  const quoteColor = isGreen ? 'text-white/80' : 'text-gray-600';
+  const cardBg = isGreen ? 'bg-white/10 border-white/20' : 'bg-gray-50 border-gray-100';
+  const badgeBg = isGreen ? 'bg-white/10 border-white/20' : 'bg-white border-gray-200';
+  const avatarBg = isGreen ? 'bg-white/20 text-white' : 'bg-primary/10 text-primary';
+  const starEmpty = isGreen ? 'text-white/30' : 'text-gray-200';
 
   useEffect(() => {
     api.getTestimonials()
@@ -36,10 +51,10 @@ export function GoogleReviewsSection() {
       .catch(() => {});
   }, []);
 
-  const googleUrl = 'https://g.page/r/CQ_example/review';
+  const googleUrl = getValue('reviews', 'google_url', 'https://g.page/r/CQ_example/review');
 
   return (
-    <section id="customers" className="py-16 section-white scroll-mt-[90px]">
+    <section id="customers" className={`py-16 ${bgClass} scroll-mt-[90px]`}>
       <div className="max-w-6xl mx-auto px-4">
         {/* Header */}
         <motion.div
@@ -48,24 +63,24 @@ export function GoogleReviewsSection() {
           viewport={{ once: true }}
           className="text-center mb-10"
         >
-          <p className="text-sm text-gray-500 uppercase tracking-wider mb-2">Real Reviews</p>
-          <h2 className="text-3xl font-bold text-primary mb-4">What Our Clients Say</h2>
+          <p className={`${subTextColor} text-sm uppercase tracking-wider mb-2`}>What Our Clients Say</p>
+          <h2 className={`text-3xl font-bold ${textColor} mb-4`}>Reviews</h2>
 
           {/* Google Rating Badge */}
-          <div className="inline-flex items-center gap-3 bg-white border border-gray-200 rounded-full px-6 py-3 shadow-sm">
+          <div className={`inline-flex items-center gap-3 ${badgeBg} rounded-full px-6 py-3 shadow-sm border`}>
             <div className="flex items-center gap-1">
               {[1,2,3,4,5].map((star) => (
                 <Star
                   key={star}
-                  className={`w-5 h-5 ${star <= Math.round(avgRating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-200'}`}
+                  className={`w-5 h-5 ${star <= Math.round(avgRating) ? 'text-yellow-400 fill-yellow-400' : starEmpty}`}
                 />
               ))}
             </div>
-            <span className="font-bold text-gray-900">{avgRating}</span>
-            <span className="text-gray-500 text-sm">({totalReviews} reviews)</span>
-            <div className="w-px h-5 bg-gray-200 mx-1" />
-            <MapPin className="w-4 h-4 text-gray-400" />
-            <span className="text-sm text-gray-500">Google</span>
+            <span className={`font-bold ${isGreen ? 'text-white' : 'text-gray-900'}`}>{avgRating}</span>
+            <span className={`${subTextColor} text-sm`}>({totalReviews} reviews)</span>
+            <div className={`w-px h-5 ${isGreen ? 'bg-white/20' : 'bg-gray-200'} mx-1`} />
+            <MapPin className={`w-4 h-4 ${subTextColor}`} />
+            <span className={`text-sm ${subTextColor}`}>Google</span>
           </div>
         </motion.div>
 
@@ -79,28 +94,28 @@ export function GoogleReviewsSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-gray-50 p-6 rounded-lg border border-gray-100"
+                className={`${cardBg} p-6 rounded-lg border`}
               >
                 {/* Author header */}
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-semibold text-sm">
+                  <div className={`w-10 h-10 ${avatarBg} rounded-full flex items-center justify-center font-semibold text-sm`}>
                     {review.author_name.charAt(0)}
                   </div>
                   <div>
-                    <p className="font-medium text-sm text-gray-900">{review.author_name}</p>
+                    <p className={`font-medium text-sm ${isGreen ? 'text-white' : 'text-gray-900'}`}>{review.author_name}</p>
                     <div className="flex items-center gap-1">
                       {[1,2,3,4,5].map((star) => (
-                        <Star key={star} className={`w-3 h-3 ${star <= review.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-200'}`} />
+                        <Star key={star} className={`w-3 h-3 ${star <= review.rating ? 'text-yellow-400 fill-yellow-400' : starEmpty}`} />
                       ))}
                       {review.relative_time_description && (
-                        <span className="text-xs text-gray-400 ml-1">{review.relative_time_description}</span>
+                        <span className={`text-xs ${subTextColor} ml-1`}>{review.relative_time_description}</span>
                       )}
                     </div>
                   </div>
                 </div>
 
                 {/* Quote */}
-                <p className="text-sm text-gray-600 leading-relaxed">
+                <p className={`text-sm ${quoteColor} leading-relaxed`}>
                   &ldquo;{review.text}&rdquo;
                 </p>
               </motion.div>
@@ -108,34 +123,35 @@ export function GoogleReviewsSection() {
           </div>
         ) : (
           <div className="text-center py-12 mb-10">
-            <Star className="w-12 h-12 text-gray-200 mx-auto mb-4" />
-            <p className="text-gray-400 mb-2">No reviews yet</p>
-            <p className="text-sm text-gray-400">Add reviews through the admin panel</p>
+            <Star className={`w-12 h-12 ${starEmpty} mx-auto mb-4`} />
+            <p className={subTextColor}>No reviews yet</p>
+            <p className={`text-sm ${subTextColor}`}>Add reviews through the admin panel</p>
           </div>
         )}
 
-        {/* CTA to Google */}
+        {/* CTA buttons */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center"
+          className="text-center flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
           <a
             href={googleUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-primary text-white px-8 py-3.5 text-sm font-semibold tracking-wider uppercase hover:bg-primary-dark transition-colors rounded-md"
+            className={`inline-flex items-center gap-2 ${isGreen ? 'bg-white text-primary hover:bg-white/90' : 'bg-primary text-white hover:bg-primary-dark'} px-8 py-3.5 text-sm font-semibold tracking-wider uppercase transition-colors rounded-md`}
           >
             <Star className="w-4 h-4" />
             Read All Reviews on Google
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
-          {totalReviews > 0 && (
-            <p className="text-xs text-gray-400 mt-3">
-              Reviews verified by Google. Click to read all {totalReviews}+ reviews.
-            </p>
-          )}
+
+          {/* Admin hint - shows how to customise */}
+          <span className={`text-xs ${subTextColor} flex items-center gap-1`}>
+            <Palette className="w-3 h-3" />
+            BG: {bgColor}
+          </span>
         </motion.div>
       </div>
     </section>

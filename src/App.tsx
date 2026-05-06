@@ -19,7 +19,6 @@ import { VideoSection } from '@/sections/VideoSection';
 import { ServicesSection } from '@/sections/ServicesSection';
 import { PricingSection } from '@/sections/PricingSection';
 import { TestimonialSection } from '@/sections/TestimonialSection';
-import { ReviewsSection } from '@/sections/ReviewsSection';
 import { GallerySection } from '@/sections/GallerySection';
 import { ContactSection } from '@/sections/ContactSection';
 import { CertificationsSection } from '@/sections/CertificationsSection';
@@ -59,7 +58,6 @@ function PublicLayout() {
         <PricingSection />
         <GoogleReviewsSection />
         <TestimonialSection />
-        <ReviewsSection />
         <GallerySection />
         <ContactSection />
         <CertificationsSection />

@@ -5,7 +5,7 @@ import { useSectionBg } from '@/hooks/useSectionBg';
 
 export function GallerySection() {
   const [images, setImages] = useState<any[]>([]);
-  const bgClass = useSectionBg('gallery', 'warm');
+  const { className, style, hasImage, overlayOpacity } = useSectionBg('gallery', 'warm');
 
   useEffect(() => {
     api.getGallery().then(setImages).catch(console.error);
@@ -15,8 +15,9 @@ export function GallerySection() {
   const displayImages = images.length > 0 ? images.map((img) => `http://46.225.171.57:3001${img.image_path}`) : defaultImages;
 
   return (
-    <motion.section initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className={`py-12 ${bgClass} overflow-hidden`}>
-      <div className="relative">
+    <motion.section initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className={`py-12 ${className} ${hasImage ? 'relative' : ''} overflow-hidden`} style={style}>
+      {hasImage && <div className="absolute inset-0 bg-black" style={{ opacity: overlayOpacity / 100 }} />}
+      <div className={`relative ${hasImage ? 'z-10' : ''}`}>
         <div className="flex gap-4 animate-scroll hover:animation-paused">
           {[...displayImages, ...displayImages].map((src, index) => (
             <div key={index} className="flex-shrink-0 w-64 h-64 rounded-lg overflow-hidden">

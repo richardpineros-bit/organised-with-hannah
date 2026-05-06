@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2026-05-07
+
+### Added
+- Google Reviews section between Pricing and Featured Testimonial
+- Google star rating badge (4.9/5 with 47 reviews)
+- 3 Google review cards with avatars, star ratings, and review text
+- "Read All Reviews on Google" CTA button linking to Google Business profile
+- Placeholder for Google Places API integration (set Place ID and API key in admin)
+- Static fallback reviews display when API is not configured
+
+### Changed
+- Review section flow: Pricing → Google Reviews → Featured Testimonial → All Reviews
+- Google Reviews uses alternating white/warm-gray background
+
 ## 2026-05-06 (Evening)
 
 ### Changed

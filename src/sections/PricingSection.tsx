@@ -7,7 +7,7 @@ import { useSectionBg } from '@/hooks/useSectionBg';
 
 export function PricingSection() {
   const { getValue } = useContentStore();
-  const bgClass = useSectionBg('pricing', 'gray');
+  const { className, style, hasImage, overlayOpacity } = useSectionBg('pricing', 'gray');
   const [services, setServices] = useState<any[]>([]);
 
   useEffect(() => {
@@ -15,8 +15,9 @@ export function PricingSection() {
   }, []);
 
   return (
-    <section id="pricing" className={`relative py-20 ${bgClass} scroll-mt-[90px]`}>
-      <div className="max-w-6xl mx-auto px-4 relative z-10">
+    <section id="pricing" className={`relative py-20 ${className} ${hasImage ? 'relative' : ''} scroll-mt-[90px]`} style={style}>
+      {hasImage && <div className="absolute inset-0 bg-black" style={{ opacity: overlayOpacity / 100 }} />}
+      <div className={`max-w-6xl mx-auto px-4 relative z-10 ${hasImage ? 'relative z-10' : ''}`}>
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.5 }} className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">{getValue('pricing', 'title', 'Pricing and Inclusions')}</h2>
           <h3 className="text-2xl font-semibold text-gray-900 mb-2">Packages</h3>

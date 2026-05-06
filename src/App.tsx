@@ -18,7 +18,6 @@ import { LifeFlowSection } from '@/sections/LifeFlowSection';
 import { VideoSection } from '@/sections/VideoSection';
 import { ServicesSection } from '@/sections/ServicesSection';
 import { PricingSection } from '@/sections/PricingSection';
-import { TestimonialSection } from '@/sections/TestimonialSection';
 import { GallerySection } from '@/sections/GallerySection';
 import { ContactSection } from '@/sections/ContactSection';
 import { CertificationsSection } from '@/sections/CertificationsSection';
@@ -57,7 +56,6 @@ function PublicLayout() {
         <ServicesSection />
         <PricingSection />
         <GoogleReviewsSection />
-        <TestimonialSection />
         <GallerySection />
         <ContactSection />
         <CertificationsSection />

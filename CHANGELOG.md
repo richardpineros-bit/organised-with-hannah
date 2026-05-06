@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2026-05-08 (Background Images)
+
+### Added
+- **Background image support for ALL sections**
+- New `bg_image` content key per section - set any image URL
+- New `bg_overlay` content key - 0-100 (percentage darkness over image)
+- Auto text color switching: white text when image has >=30% overlay or dark bg
+- Sections automatically add `relative` positioning + overlay div when image is set
+
+### How to use background images:
+1. Go to `/admin/content-editor`
+2. Section: `[section_name]` (e.g. `about`)
+3. Key: `bg_image`
+4. Value: `/images/hero-bg.jpg` (or any image path/URL)
+5. Key: `bg_overlay`
+6. Value: `40` (0-100, percentage of black overlay for readability)
+7. Save and refresh
+
+### Example combinations:
+| Section | bg_color | bg_image | bg_overlay | Result |
+|---------|----------|----------|------------|--------|
+| About | `none` | `/images/about-bg.jpg` | `40` | Photo background with 40% dimming |
+| Reviews | `none` | `/images/hero-bg.jpg` | `50` | Dark photo bg with white text |
+| Services | `white` | (empty) | `0` | Solid white background (default) |
+
+### Text auto-adjustment:
+- When `bg_overlay >= 30` OR `bg_color` is `primary`/`dark` → text switches to white
+- When image is set with low overlay → text stays dark
+- All headings, paragraphs, and cards auto-switch colors
+
 ## 2026-05-08
 
 ### Added

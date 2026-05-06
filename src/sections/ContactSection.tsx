@@ -10,7 +10,7 @@ import { Phone, MessageSquare, MapPin } from 'lucide-react';
 
 export function ContactSection() {
   const { getValue } = useContentStore();
-  const bgClass = useSectionBg('contact', 'gray');
+  const { className, style, hasImage, overlayOpacity, textLight } = useSectionBg('contact', 'gray');
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ first_name: '', last_name: '', email: '', phone: '', subject: '', message: '' });
 
@@ -20,8 +20,9 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className={`relative py-20 ${bgClass} scroll-mt-[90px]`}>
-      <div className="max-w-2xl mx-auto px-4 relative z-10">
+    <section id="contact" className={`relative py-20 ${className} ${hasImage ? 'relative' : ''} scroll-mt-[90px]`} style={style}>
+      {hasImage && <div className="absolute inset-0 bg-black" style={{ opacity: overlayOpacity / 100 }} />}
+      <div className={`max-w-2xl mx-auto px-4 ${hasImage ? 'relative z-10' : ''}`}>
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }} className="bg-white p-8 md:p-12 shadow-lg">
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">{getValue('contact', 'title', 'Contact me')}</h2>
           {submitted ? (

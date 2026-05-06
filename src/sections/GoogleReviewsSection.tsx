@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Star, ExternalLink, MapPin, Palette } from 'lucide-react';
 import { api } from '@/lib/api';
 import { useContentStore } from '@/store/contentStore';
+import { useSectionBg } from '@/hooks/useSectionBg';
 
 interface Review {
   id?: number;
@@ -18,14 +19,10 @@ export function GoogleReviewsSection() {
   const [avgRating, setAvgRating] = useState(4.9);
   const [totalReviews, setTotalReviews] = useState(0);
 
-  // Customisable: admin can set background color in content editor
-  // Keys: reviews.bg_color (e.g. 'primary', 'white', 'gray', 'warm')
-  const bgColor = getValue('reviews', 'bg_color', 'primary'); // default: green
-  const bgClass = bgColor === 'white' ? 'bg-white' : bgColor === 'gray' ? 'bg-gray-50' : bgColor === 'warm' ? 'bg-[hsl(35,25%,97%)]' : 'bg-primary';
-  const isGreen = bgColor === 'primary' || !bgColor;
+  const bgClass = useSectionBg('reviews', 'primary'); // default: green
+  const isGreen = bgClass === 'bg-primary';
   const textColor = isGreen ? 'text-white' : 'text-primary';
-  const subTextColor = isGreen ? 'text-white/60' : 'text-gray-500';
-  const quoteColor = isGreen ? 'text-white/80' : 'text-gray-600';
+
   const cardBg = isGreen ? 'bg-white/10 border-white/20' : 'bg-gray-50 border-gray-100';
   const badgeBg = isGreen ? 'bg-white/10 border-white/20' : 'bg-white border-gray-200';
   const avatarBg = isGreen ? 'bg-white/20 text-white' : 'bg-primary/10 text-primary';
@@ -67,20 +64,17 @@ export function GoogleReviewsSection() {
           <h2 className={`text-3xl font-bold ${textColor} mb-4`}>Reviews</h2>
 
           {/* Google Rating Badge */}
-          <div className={`inline-flex items-center gap-3 ${badgeBg} rounded-full px-6 py-3 shadow-sm border`}>
+          <div className={`inline-flex items-center gap-3 ${isGreen ? 'bg-white/10 border-white/20' : 'bg-white border-gray-200'} rounded-full px-6 py-3 shadow-sm border`}>
             <div className="flex items-center gap-1">
               {[1,2,3,4,5].map((star) => (
-                <Star
-                  key={star}
-                  className={`w-5 h-5 ${star <= Math.round(avgRating) ? 'text-yellow-400 fill-yellow-400' : starEmpty}`}
-                />
+                <Star key={star} className={`w-5 h-5 ${star <= Math.round(avgRating) ? 'text-yellow-400 fill-yellow-400' : isGreen ? 'text-white/30' : 'text-gray-200'}`} />
               ))}
             </div>
             <span className={`font-bold ${isGreen ? 'text-white' : 'text-gray-900'}`}>{avgRating}</span>
-            <span className={`${subTextColor} text-sm`}>({totalReviews} reviews)</span>
+            <span className={`${isGreen ? 'text-white/60' : 'text-gray-500'} text-sm`}>({totalReviews} reviews)</span>
             <div className={`w-px h-5 ${isGreen ? 'bg-white/20' : 'bg-gray-200'} mx-1`} />
-            <MapPin className={`w-4 h-4 ${subTextColor}`} />
-            <span className={`text-sm ${subTextColor}`}>Google</span>
+            <MapPin className={`w-4 h-4 ${isGreen ? 'text-white/60' : 'text-gray-400'}`} />
+            <span className={`text-sm ${isGreen ? 'text-white/60' : 'text-gray-500'}`}>Google</span>
           </div>
         </motion.div>
 
@@ -105,10 +99,10 @@ export function GoogleReviewsSection() {
                     <p className={`font-medium text-sm ${isGreen ? 'text-white' : 'text-gray-900'}`}>{review.author_name}</p>
                     <div className="flex items-center gap-1">
                       {[1,2,3,4,5].map((star) => (
-                        <Star key={star} className={`w-3 h-3 ${star <= review.rating ? 'text-yellow-400 fill-yellow-400' : starEmpty}`} />
+                        <Star key={star} className={`w-3 h-3 ${star <= review.rating ? 'text-yellow-400 fill-yellow-400' : isGreen ? 'text-white/30' : 'text-gray-200'}`} />
                       ))}
                       {review.relative_time_description && (
-                        <span className={`text-xs ${subTextColor} ml-1`}>{review.relative_time_description}</span>
+                        <span className={`text-xs ${isGreen ? 'text-white/60' : 'text-gray-400'} ml-1`}>{review.relative_time_description}</span>
                       )}
                     </div>
                   </div>
@@ -123,9 +117,9 @@ export function GoogleReviewsSection() {
           </div>
         ) : (
           <div className="text-center py-12 mb-10">
-            <Star className={`w-12 h-12 ${starEmpty} mx-auto mb-4`} />
-            <p className={subTextColor}>No reviews yet</p>
-            <p className={`text-sm ${subTextColor}`}>Add reviews through the admin panel</p>
+            <Star className={`w-12 h-12 ${isGreen ? 'text-white/30' : 'text-gray-200'} mx-auto mb-4`} />
+            <p className={isGreen ? 'text-white/60' : 'text-gray-500'}>No reviews yet</p>
+            <p className={`text-sm ${isGreen ? 'text-white/60' : 'text-gray-500'}`}>Add reviews through the admin panel</p>
           </div>
         )}
 
@@ -147,10 +141,10 @@ export function GoogleReviewsSection() {
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
 
-          {/* Admin hint - shows how to customise */}
-          <span className={`text-xs ${subTextColor} flex items-center gap-1`}>
+          {/* Admin hint */}
+          <span className={`text-xs ${isGreen ? 'text-white/60' : 'text-gray-400'} flex items-center gap-1`}>
             <Palette className="w-3 h-3" />
-            BG: {bgColor}
+            BG: primary (customisable)
           </span>
         </motion.div>
       </div>

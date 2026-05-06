@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2026-05-07 (Custom bg)
+
+### Changed
+- Reviews section: Green background (bg-primary) with admin-customisable color
+- Background can be changed via admin content editor: Section='reviews', Key='bg_color'
+- Supported values: 'primary' (green/default), 'white', 'gray', 'warm'
+- All text/card colors auto-adjust based on background choice
+- Shows current bg color label in admin hint next to CTA button
+
 ## 2026-05-07 (Carousel)
 
 ### Changed

@@ -11,11 +11,12 @@ const problemList = [
 ];
 
 export function ProblemCarousel() {
-  const bgClass = useSectionBg('problems', 'gray');
+  const { className, style, hasImage, overlayOpacity } = useSectionBg('problems', 'gray');
 
   return (
-    <section className={`py-16 ${bgClass}`}>
-      <div className="max-w-6xl mx-auto px-4">
+    <section className={`py-16 ${className} ${hasImage ? 'relative' : ''}`} style={style}>
+      {hasImage && <div className="absolute inset-0 bg-black" style={{ opacity: overlayOpacity / 100 }} />}
+      <div className={`max-w-6xl mx-auto px-4 ${hasImage ? 'relative z-10' : ''}`}>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
           {problemList.map((p, i) => (
             <motion.div key={i} initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-30px' }} transition={{ duration: 0.4, delay: i * 0.08 }} className="bg-white p-6 shadow hover:shadow-md transition-shadow">

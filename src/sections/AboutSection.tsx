@@ -1,11 +1,13 @@
 import { motion } from 'framer-motion';
 import { useContentStore } from '@/store/contentStore';
+import { useSectionBg } from '@/hooks/useSectionBg';
 
 export function AboutSection() {
   const { getValue } = useContentStore();
+  const bgClass = useSectionBg('about', 'white');
 
   return (
-    <section id="about" className="py-20 section-white scroll-mt-[90px]">
+    <section id="about" className={`py-20 ${bgClass} scroll-mt-[90px]`}>
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <motion.div 

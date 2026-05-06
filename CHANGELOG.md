@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2026-05-07 (Carousel)
+
+### Changed
+- Reviews section: Complete rewrite as rotating carousel on GREEN background
+- Reviews auto-rotate every 5 seconds with smooth fade/slide animation
+- Added left/right arrow navigation buttons
+- Added dot indicators at bottom (active dot is wider)
+- Pauses autoplay on manual navigation, resumes after 10 seconds
+- Added `id="customers"` so scroll spy tracks Reviews menu tab correctly
+- Single review displayed at a time with large quote styling
+- Fetches reviews from admin-managed database via /api/testimonials
+- Removed all old testimonial code (Suzy/Linda duplicates)
+
 ## 2026-05-07 (Final)
 
 ### Changed

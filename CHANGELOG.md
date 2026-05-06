@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2026-05-07 (Fix)
+
+### Removed
+- Duplicate ReviewsSection removed from page flow - was causing same testimonial to appear twice (below featured quote and again in cards)
+- Review section flow is now: Pricing → Google Reviews → Featured Testimonial → Gallery → Contact
+
 ## 2026-05-07
 
 ### Added

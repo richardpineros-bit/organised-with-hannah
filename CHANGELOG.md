@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2026-05-07 (Final)
+
+### Changed
+- Old green TestimonialSection (Suzy/Linda duplicate) REMOVED
+- GoogleReviewsSection now fetches reviews from admin-managed database via /api/testimonials
+- Admin can add/edit/delete reviews at /admin/testimonials
+- Reviews display dynamically - shows placeholder if no reviews exist
+- "Leave a Review on Google" button links to Google Business profile
+
+### Removed
+- TestimonialSection.tsx (green background with duplicate quotes)
+- ReviewsSection.tsx (duplicate card layout)
+
 ## 2026-05-07 (Fix)
 
 ### Removed

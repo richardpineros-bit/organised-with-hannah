@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2026-05-08
+
+### Added
+- **Customizable backgrounds for ALL sections** via admin content editor
+- New `useSectionBg` hook: reads `bg_color` from content store per section
+- Each section can have its background changed independently
+- Supported colors: `primary` (green), `white`, `gray`, `warm`, `dark`, `none`
+
+### Sections with customizable backgrounds:
+| Section | Default | Content Key |
+|---------|---------|-------------|
+| Hero | transparent | N/A |
+| Problems | gray | `problems.bg_color` |
+| About | white | `about.bg_color` |
+| Video | white | `video.bg_color` |
+| Services | warm | `services.bg_color` |
+| Why Organise | gray | `why.bg_color` |
+| Why Choose | white | `whychoose.bg_color` |
+| Life Flow | warm | `lifeflow.bg_color` |
+| Pricing | gray | `pricing.bg_color` |
+| Reviews | primary (green) | `reviews.bg_color` |
+| Gallery | warm | `gallery.bg_color` |
+| Certifications | white | `certs.bg_color` |
+| Contact | gray | `contact.bg_color` |
+
+### How to customize:
+1. Go to `/admin/content-editor`
+2. Section: `[section_name]` (e.g. `reviews`)
+3. Key: `bg_color`
+4. Value: `primary`, `white`, `gray`, `warm`, `dark`, or `none`
+5. Save and refresh the page
+
 ## 2026-05-07 (Custom bg)
 
 ### Changed

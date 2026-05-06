@@ -1,6 +1,6 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { Star, ExternalLink, MapPin } from 'lucide-react';
 import { api } from '@/lib/api';
 
 interface Review {
@@ -8,13 +8,13 @@ interface Review {
   author_name: string;
   rating: number;
   text: string;
-  location?: string;
+  relative_time_description?: string;
 }
 
 export function GoogleReviewsSection() {
   const [reviews, setReviews] = useState<Review[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [avgRating, setAvgRating] = useState(4.9);
+  const [totalReviews, setTotalReviews] = useState(0);
 
   useEffect(() => {
     api.getTestimonials()
@@ -25,132 +25,118 @@ export function GoogleReviewsSection() {
             author_name: t.name,
             rating: t.rating || 5,
             text: t.text,
-            location: t.location || '',
+            relative_time_description: t.location || '',
           }));
           setReviews(mapped);
+          setTotalReviews(data.length);
+          const avg = mapped.reduce((sum: number, r: Review) => sum + r.rating, 0) / mapped.length;
+          setAvgRating(Math.round(avg * 10) / 10);
         }
       })
       .catch(() => {});
   }, []);
 
-  // Auto-rotate carousel
-  useEffect(() => {
-    if (!isAutoPlaying || reviews.length <= 1) return;
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % reviews.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [isAutoPlaying, reviews.length]);
-
-  const goTo = useCallback((index: number) => {
-    setCurrentIndex(index);
-    setIsAutoPlaying(false);
-    // Resume autoplay after 10 seconds of inactivity
-    setTimeout(() => setIsAutoPlaying(true), 10000);
-  }, []);
-
-  const goNext = useCallback(() => {
-    goTo((currentIndex + 1) % reviews.length);
-  }, [currentIndex, reviews.length, goTo]);
-
-  const goPrev = useCallback(() => {
-    goTo((currentIndex - 1 + reviews.length) % reviews.length);
-  }, [currentIndex, reviews.length, goTo]);
-
-  if (reviews.length === 0) return null;
-
-  const current = reviews[currentIndex];
+  const googleUrl = 'https://g.page/r/CQ_example/review';
 
   return (
-    <section id="customers" className="py-20 bg-primary scroll-mt-[90px]">
-      <div className="max-w-4xl mx-auto px-4">
+    <section id="customers" className="py-16 section-white scroll-mt-[90px]">
+      <div className="max-w-6xl mx-auto px-4">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-10"
         >
-          <p className="text-white/60 text-sm uppercase tracking-wider mb-2">What Our Clients Say</p>
-          <h2 className="text-3xl font-bold text-white mb-4">Reviews</h2>
-        </motion.div>
+          <p className="text-sm text-gray-500 uppercase tracking-wider mb-2">Real Reviews</p>
+          <h2 className="text-3xl font-bold text-primary mb-4">What Our Clients Say</h2>
 
-        {/* Carousel */}
-        <div className="relative">
-          {/* Quote icon */}
-          <Quote className="w-12 h-12 text-white/20 mx-auto mb-6" />
-
-          {/* Review content */}
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.4 }}
-            className="text-center min-h-[200px] flex flex-col items-center justify-center"
-          >
-            {/* Stars */}
-            <div className="flex justify-center gap-1 mb-6">
+          {/* Google Rating Badge */}
+          <div className="inline-flex items-center gap-3 bg-white border border-gray-200 rounded-full px-6 py-3 shadow-sm">
+            <div className="flex items-center gap-1">
               {[1,2,3,4,5].map((star) => (
                 <Star
                   key={star}
-                  className={`w-5 h-5 ${star <= current.rating ? 'text-white fill-white' : 'text-white/30'}`}
+                  className={`w-5 h-5 ${star <= Math.round(avgRating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-200'}`}
                 />
               ))}
             </div>
+            <span className="font-bold text-gray-900">{avgRating}</span>
+            <span className="text-gray-500 text-sm">({totalReviews} reviews)</span>
+            <div className="w-px h-5 bg-gray-200 mx-1" />
+            <MapPin className="w-4 h-4 text-gray-400" />
+            <span className="text-sm text-gray-500">Google</span>
+          </div>
+        </motion.div>
 
-            {/* Quote */}
-            <p className="text-white text-lg md:text-xl leading-relaxed mb-8 max-w-2xl">
-              &ldquo;{current.text}&rdquo;
-            </p>
-
-            {/* Author */}
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-white font-semibold text-sm">
-                {current.author_name.charAt(0)}
-              </div>
-              <div className="text-left">
-                <p className="text-white font-medium">{current.author_name}</p>
-                {current.location && (
-                  <p className="text-white/60 text-sm">{current.location}</p>
-                )}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Navigation arrows */}
-          {reviews.length > 1 && (
-            <>
-              <button
-                onClick={goPrev}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+        {/* Review Cards */}
+        {reviews.length > 0 ? (
+          <div className="grid md:grid-cols-3 gap-6 mb-10">
+            {reviews.slice(0, 3).map((review, index) => (
+              <motion.div
+                key={review.id || index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-gray-50 p-6 rounded-lg border border-gray-100"
               >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={goNext}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </>
-          )}
-        </div>
+                {/* Author header */}
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-semibold text-sm">
+                    {review.author_name.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="font-medium text-sm text-gray-900">{review.author_name}</p>
+                    <div className="flex items-center gap-1">
+                      {[1,2,3,4,5].map((star) => (
+                        <Star key={star} className={`w-3 h-3 ${star <= review.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-200'}`} />
+                      ))}
+                      {review.relative_time_description && (
+                        <span className="text-xs text-gray-400 ml-1">{review.relative_time_description}</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
 
-        {/* Dot indicators */}
-        {reviews.length > 1 && (
-          <div className="flex justify-center gap-2 mt-8">
-            {reviews.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goTo(index)}
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                  index === currentIndex ? 'bg-white w-8' : 'bg-white/40 hover:bg-white/60'
-                }`}
-              />
+                {/* Quote */}
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  &ldquo;{review.text}&rdquo;
+                </p>
+              </motion.div>
             ))}
           </div>
+        ) : (
+          <div className="text-center py-12 mb-10">
+            <Star className="w-12 h-12 text-gray-200 mx-auto mb-4" />
+            <p className="text-gray-400 mb-2">No reviews yet</p>
+            <p className="text-sm text-gray-400">Add reviews through the admin panel</p>
+          </div>
         )}
+
+        {/* CTA to Google */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center"
+        >
+          <a
+            href={googleUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-primary text-white px-8 py-3.5 text-sm font-semibold tracking-wider uppercase hover:bg-primary-dark transition-colors rounded-md"
+          >
+            <Star className="w-4 h-4" />
+            Read All Reviews on Google
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+          {totalReviews > 0 && (
+            <p className="text-xs text-gray-400 mt-3">
+              Reviews verified by Google. Click to read all {totalReviews}+ reviews.
+            </p>
+          )}
+        </motion.div>
       </div>
     </section>
   );

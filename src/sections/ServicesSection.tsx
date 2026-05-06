@@ -6,7 +6,7 @@ import { useSectionBg } from '@/hooks/useSectionBg';
 
 export function ServicesSection() {
   const { getValue } = useContentStore();
-  const bgClass = useSectionBg('services', 'warm');
+  const { className, style, hasImage, overlayOpacity } = useSectionBg('services', 'warm');
 
   useEffect(() => {
     api.getServices().catch(console.error);
@@ -20,8 +20,9 @@ export function ServicesSection() {
   ];
 
   return (
-    <section id="services" className={`py-20 ${bgClass} scroll-mt-[90px]`}>
-      <div className="max-w-6xl mx-auto px-4">
+    <section id="services" className={`py-20 ${className} ${hasImage ? 'relative' : ''} scroll-mt-[90px]`} style={style}>
+      {hasImage && <div className="absolute inset-0 bg-black" style={{ opacity: overlayOpacity / 100 }} />}
+      <div className={`max-w-6xl mx-auto px-4 ${hasImage ? 'relative z-10' : ''}`}>
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.5 }} className="text-center mb-12">
           <p className="text-sm text-gray-500 uppercase tracking-wider mb-2">The Core of what I do</p>
           <h2 className="text-3xl font-bold text-primary">{getValue('services', 'title', 'Decluttering, Cleaning and Organising')}</h2>
